@@ -1,0 +1,15 @@
+# Desktop UI
+pyqt6~=6.10.1
+pyqt6-sip~=13.10.3
+
+# Deep Learning
+torch>=2.0.0
+torchaudio>=2.0.0
+
+# Audio Processing
+librosa>=0.10.0
+soundfile>=0.12.0
+numpy>=1.24.0
+
+# Utils
+pydub>=0.25.1
