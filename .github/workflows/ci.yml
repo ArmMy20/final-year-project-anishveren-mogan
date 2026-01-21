@@ -1,0 +1,53 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+        cache: 'pip'
+
+    - name: Install system dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libsndfile1
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pytest ruff
+
+    - name: Lint with ruff
+      run: |
+        ruff check src/ ui/ tests/ --select E,F,W,I --ignore E501
+
+    - name: Check core imports
+      run: |
+        python -c "import librosa; print('librosa OK')"
+        python -c "import torch; print('torch OK')"
+        python -c "import soundfile; print('soundfile OK')"
+        python -c "import numpy; print('numpy OK')"
+        python -c "import PyQt6; print('PyQt6 OK')"
+
+    - name: Run tests
+      env:
+        PYTHONPATH: .
+      run: |
+        if [ -d "tests" ] && [ "$(ls -A tests/*.py 2>/dev/null)" ]; then
+          pytest tests/ -v --tb=short
+        else
+          echo "No tests found yet - skipping"
+        fi
