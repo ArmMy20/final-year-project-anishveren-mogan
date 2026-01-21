@@ -14,17 +14,15 @@ class TranscriptionWorker(QThread):
             import time
 
             self.progress.emit(20)
-            time.sleep(1)  # Simulate preprocessing
+            time.sleep(1)
 
             self.progress.emit(50)
-            time.sleep(1)  # Simulate onset detection
+            time.sleep(1)
 
             self.progress.emit(80)
-            time.sleep(1)  # Simulate classification
+            time.sleep(1)
 
             self.progress.emit(100)
-
-            # Mock result replace with actual transcription code later
             result = {
                 'primary_sticking': 'RlKRLKrlRL',
                 'confidence': 0.85,

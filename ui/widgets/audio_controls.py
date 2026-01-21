@@ -9,7 +9,7 @@ class AudioControlsWidget(QWidget):
     play_pause_clicked = pyqtSignal()
     stop_clicked = pyqtSignal()
     trim_changed = pyqtSignal(float, float)
-    volume_changed = pyqtSignal(float)  # 0.0 to 1.0
+    volume_changed = pyqtSignal(float)
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -24,7 +24,6 @@ class AudioControlsWidget(QWidget):
         layout = QVBoxLayout()
         self.setLayout(layout)
 
-        # === Playback Controls ===
         playback_layout = QHBoxLayout()
 
         self.play_pause_btn = QPushButton("▶ Play")
@@ -43,14 +42,13 @@ class AudioControlsWidget(QWidget):
         playback_layout.addWidget(self.position_label)
         playback_layout.addStretch()
 
-        # Volume control
         volume_label = QLabel("🔊")
         volume_label.setStyleSheet("font-size: 16px;")
 
         self.volume_slider = QSlider(Qt.Orientation.Horizontal)
         self.volume_slider.setMinimum(0)
         self.volume_slider.setMaximum(100)
-        self.volume_slider.setValue(70)  # Default 70%
+        self.volume_slider.setValue(70)
         self.volume_slider.setMaximumWidth(120)
         self.volume_slider.setToolTip("Volume")
         self.volume_slider.valueChanged.connect(self.on_volume_changed)
@@ -65,14 +63,12 @@ class AudioControlsWidget(QWidget):
 
         layout.addLayout(playback_layout)
 
-        # === Trim Controls ===
         trim_label = QLabel("Trim Region (seconds):")
         trim_label.setStyleSheet("font-weight: bold; margin-top: 10px;")
         layout.addWidget(trim_label)
 
         trim_layout = QHBoxLayout()
 
-        # Start time
         start_label = QLabel("Start:")
         self.start_spinbox = QDoubleSpinBox()
         self.start_spinbox.setDecimals(2)
@@ -84,7 +80,6 @@ class AudioControlsWidget(QWidget):
         self.start_spinbox.valueChanged.connect(self.on_trim_changed)
         self.start_spinbox.setStyleSheet("padding: 5px;")
 
-        # End time
         end_label = QLabel("End:")
         self.end_spinbox = QDoubleSpinBox()
         self.end_spinbox.setDecimals(2)
@@ -96,7 +91,6 @@ class AudioControlsWidget(QWidget):
         self.end_spinbox.valueChanged.connect(self.on_trim_changed)
         self.end_spinbox.setStyleSheet("padding: 5px;")
 
-        # Reset button
         reset_btn = QPushButton("Reset")
         reset_btn.clicked.connect(self.reset_trim)
         reset_btn.setStyleSheet("padding: 5px;")
@@ -110,7 +104,6 @@ class AudioControlsWidget(QWidget):
 
         layout.addLayout(trim_layout)
 
-        # Info label
         self.trim_info_label = QLabel("Trim duration: 0.00s")
         self.trim_info_label.setStyleSheet("color: #666; font-style: italic;")
         layout.addWidget(self.trim_info_label)
@@ -127,7 +120,6 @@ class AudioControlsWidget(QWidget):
     def on_volume_changed(self, value):
         """Handle volume slider changes"""
         self.volume_label.setText(f"{value}%")
-        # Convert 0-100 to 0.0-1.0
         volume = value / 100.0
         self.volume_changed.emit(volume)
 
@@ -136,7 +128,6 @@ class AudioControlsWidget(QWidget):
         start = self.start_spinbox.value()
         end = self.end_spinbox.value()
 
-        # Ensure start < end
         if start >= end:
             if self.sender() == self.start_spinbox:
                 self.start_spinbox.setValue(max(0, end - 0.1))
@@ -144,11 +135,8 @@ class AudioControlsWidget(QWidget):
                 self.end_spinbox.setValue(min(self.duration, start + 0.1))
             return
 
-        # Update info label
         duration = end - start
         self.trim_info_label.setText(f"Trim duration: {duration:.2f}s")
-
-        # Emit signal
         self.trim_changed.emit(start, end)
 
     def reset_trim(self):
