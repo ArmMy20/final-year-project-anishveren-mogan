@@ -13,3 +13,5 @@ numpy>=1.24.0
 
 # Utils
 pydub>=0.25.1
+
+matplotlib~=3.10.6
