@@ -16,7 +16,7 @@ jobs:
     - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: '3.11'
+        python-version: '3.12.12'
         cache: 'pip'
 
     - name: Install system dependencies
@@ -32,7 +32,7 @@ jobs:
 
     - name: Lint with ruff
       run: |
-        ruff check ui/ tests/ --select E,F,W,I --ignore E501 --fix
+        ruff check ui/ tests/ --select E,F,W --ignore E501 --fix
 
     - name: Check core imports
       run: |

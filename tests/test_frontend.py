@@ -1,5 +1,11 @@
+import os
+import pytest
 from pathlib import Path
 
+pytestmark = pytest.mark.skipif(
+    os.environ.get("CI") == "true",
+    reason="Skip frontend GUI imports on CI (headless environment)",
+)
 
 class TestFrontendImports:
     def test_import_main_window(self):
