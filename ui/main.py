@@ -1,7 +1,7 @@
+import sys
 from PyQt6.QtCore import Qt
 from PyQt6.QtWidgets import QApplication
-import sys
-from main_window import DrumTranscriptionUI
+from ui.main_window import DrumTranscriptionUI
 
 def main():
     QApplication.setHighDpiScaleFactorRoundingPolicy(

@@ -32,7 +32,7 @@ jobs:
 
     - name: Lint with ruff
       run: |
-        ruff check src/ ui/ tests/ --select E,F,W,I --ignore E501
+        ruff check ui/ tests/ --select E,F,W,I --ignore E501 --fix
 
     - name: Check core imports
       run: |

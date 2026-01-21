@@ -1,9 +1,8 @@
-from PyQt6.QtCore import pyqtSignal
+from PyQt6.QtCore import Qt, pyqtSignal
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QPushButton,
     QLabel, QDoubleSpinBox, QSlider
 )
-from PyQt6.QtCore import Qt
 
 class AudioControlsWidget(QWidget):
     play_pause_clicked = pyqtSignal()

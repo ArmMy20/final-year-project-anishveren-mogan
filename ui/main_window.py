@@ -1,16 +1,12 @@
-"""
-Main window for the Drum Transcription application
-"""
+import os
 
+from PyQt6.QtCore import Qt, QUrl
+from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
 from PyQt6.QtWidgets import (
     QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
     QPushButton, QLabel, QFileDialog, QTextEdit,
     QProgressBar, QMessageBox, QSplitter, QGroupBox
 )
-from PyQt6.QtCore import Qt
-from PyQt6.QtMultimedia import QMediaPlayer, QAudioOutput
-from PyQt6.QtCore import QUrl
-import os
 
 from ui.widgets.waveform_widget import WaveformWidget
 from ui.widgets.audio_controls import AudioControlsWidget
